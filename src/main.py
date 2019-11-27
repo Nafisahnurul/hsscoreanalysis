@@ -20,6 +20,8 @@ db = mysql.connector.connect(
   passwd="",
   database="aib"
 )
+cursor = db.cursor()
+
 df = pd.read_excel("fix.xlsx")
 test = pd.read_excel("fix_test.xlsx")
 
@@ -27,8 +29,30 @@ test = pd.read_excel("fix_test.xlsx")
 def home():
 
     if request.method == 'POST':
-        print("hihi")
-        
+        cursor.execute("SELECT CODE FROM state WHERE ATE_NAME= ? ", )
+        temp =cursor.fetchall()
+        for row in temp:
+            state = row[0]
+        print(state)
+
+        cursor.execute("SELECT CODE FROM state WHERE SA_NAME= ? ", )
+        temp =cursor.fetchall()
+        for row in temp:
+            cbsa = row[0]
+        print(cbsa)
+
+        cursor.execute("SELECT CODE FROM state WHERE UNTY_NAME= ? ", )
+        temp =cursor.fetchall()
+        for row in temp:
+            county = row[0]
+        print(county)
+
+        cursor.execute("SELECT CODE FROM city WHERE TY= ? ", )
+        temp =cursor.fetchall()
+        for row in temp:
+            city = row[0]
+        print(city)
+
     else:
         print("haha")
    
@@ -37,7 +61,7 @@ def home():
     )
 
 def main():
-    
+    """
     X=df[['CITY_CODE','COUNTY_CODE','INSPECTION_YEAR']].values
     Y=df['INSPECTION_SCORE']
     #X_train,X_test,Y_train,Y_test=train_test_split(X,Y,random_state=42)
@@ -52,7 +76,8 @@ def main():
     test_x=np.vstack((test_x0,test_x1,test_x3)).T
     test_y1=rnd_clf.predict(test_x)
 
-    print(test_y1)
+    print(test_y1)"""
+
     
     port = int(os.environ.get('PORT', 8080))
 
